@@ -1,30 +1,39 @@
-import localFont from "next/font/local";
+import { Outfit } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ui/Theme_Provider";
+import { Header } from "@/components/Header";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const outfit = Outfit({ subsets: ["latin"] });
+
+const navItems = [
+  {
+    name: "Technology's",
+    link: "/",
+  },
+];
 
 export const metadata = {
   title: "CRUD Web Application",
   description:
     "Perform CRUD Operation on Next.js with Reduxtoolkit for state management",
+  icons: {
+    icon: ["logo.svg"],
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={outfit.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header navItems={navItems} />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
